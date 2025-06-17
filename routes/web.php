@@ -2,16 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\AdminSiswaController;
-use App\Http\Controllers\Admin\AdminEkstrakurikulerController;
-use App\Http\Controllers\Admin\AdminRekomendasiController;
-use App\Http\Controllers\Admin\AdminKriteriaController;
-use App\Http\Controllers\Admin\AdminPenilaianController;
-use App\Http\Controllers\Admin\AdminPendaftaranController;
-use App\Http\Controllers\Admin\AdminPembinaController;
-use App\Http\Controllers\Siswa\SiswaController;
-use App\Http\Controllers\Pembina\PembinaController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\Admin\EkstrakurikulerController;
+use App\Http\Controllers\Admin\RekomendasiController;
+use App\Http\Controllers\Admin\KriteriaController;
+use App\Http\Controllers\Admin\PenilaianController;
+use App\Http\Controllers\Admin\PendaftaranController;
+use App\Http\Controllers\Admin\PembinaController;
 
 // Public Routes
 Route::get('/', function () {
