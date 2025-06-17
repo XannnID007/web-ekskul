@@ -9,7 +9,7 @@ use App\Models\PenilaianSiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AdminPenilaianController extends Controller
+class PenilaianController extends Controller
 {
     public function index(Request $request)
     {

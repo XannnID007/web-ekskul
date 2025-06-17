@@ -7,7 +7,7 @@ use App\Models\Ekstrakurikuler;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AdminEkstrakurikulerController extends Controller
+class EkstrakurikulerController extends Controller
 {
     public function index(Request $request)
     {

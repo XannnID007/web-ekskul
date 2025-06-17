@@ -20,22 +20,22 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // ============================================
 Route::middleware(['auth', 'check.role:admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard Sistem
-    Route::get('/', [App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     // KELOLA DATA MASTER (Admin Core Responsibility)
-    Route::resource('siswa', App\Http\Controllers\Admin\AdminSiswaController::class);
+    Route::resource('siswa', App\Http\Controllers\Admin\SiswaController::class);
     Route::resource('pembina', App\Http\Controllers\Admin\AdminPembinaController::class);
-    Route::resource('ekstrakurikuler', App\Http\Controllers\Admin\AdminEkstrakurikulerController::class);
-    Route::resource('kriteria', App\Http\Controllers\Admin\AdminKriteriaController::class);
+    Route::resource('ekstrakurikuler', App\Http\Controllers\Admin\EkstrakurikulerController::class);
+    Route::resource('kriteria', App\Http\Controllers\Admin\KriteriaController::class);
 
     // KELOLA PENILAIAN SISWA (Admin Core Responsibility)
-    Route::get('penilaian', [App\Http\Controllers\Admin\AdminPenilaianController::class, 'index'])->name('penilaian.index');
-    Route::get('penilaian/siswa/{siswa}', [App\Http\Controllers\Admin\AdminPenilaianController::class, 'editSiswa'])->name('penilaian.siswa');
-    Route::put('penilaian/siswa/{siswa}', [App\Http\Controllers\Admin\AdminPenilaianController::class, 'updateSiswa'])->name('penilaian.siswa.update');
-    Route::post('penilaian/batch', [App\Http\Controllers\Admin\AdminPenilaianController::class, 'batchUpdate'])->name('penilaian.batch');
+    Route::get('penilaian', [App\Http\Controllers\Admin\PenilaianController::class, 'index'])->name('penilaian.index');
+    Route::get('penilaian/siswa/{siswa}', [App\Http\Controllers\Admin\PenilaianController::class, 'editSiswa'])->name('penilaian.siswa');
+    Route::put('penilaian/siswa/{siswa}', [App\Http\Controllers\Admin\PenilaianController::class, 'updateSiswa'])->name('penilaian.siswa.update');
+    Route::post('penilaian/batch', [App\Http\Controllers\Admin\PenilaianController::class, 'batchUpdate'])->name('penilaian.batch');
 
     // SISTEM REKOMENDASI (Admin Monitoring)
-    Route::get('rekomendasi', [App\Http\Controllers\Admin\AdminRekomendasiController::class, 'index'])->name('rekomendasi.index');
+    Route::get('rekomendasi', [App\Http\Controllers\Admin\RekomendasiController::class, 'index'])->name('rekomendasi.index');
 
     // MONITORING SISTEM (Admin Core Responsibility)
     Route::get('monitor/aktivitas', [App\Http\Controllers\Admin\MonitorController::class, 'aktivitas'])->name('monitor.aktivitas');

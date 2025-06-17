@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-class AdminSiswaController extends Controller
+class SiswaController extends Controller
 {
     public function index(Request $request)
     {

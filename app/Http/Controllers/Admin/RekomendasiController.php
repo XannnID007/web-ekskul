@@ -9,7 +9,7 @@ use App\Models\Kriteria;
 use App\Models\PenilaianSiswa;
 use Illuminate\Http\Request;
 
-class AdminRekomendasiController extends Controller
+class RekomendasiController extends Controller
 {
     public function index(Request $request)
     {

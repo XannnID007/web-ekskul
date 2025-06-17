@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kriteria;
 use Illuminate\Http\Request;
 
-class AdminKriteriaController extends Controller
+class KriteriaController extends Controller
 {
     public function index()
     {
