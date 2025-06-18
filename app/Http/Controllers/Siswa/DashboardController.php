@@ -12,21 +12,30 @@ class DashboardController extends Controller
      {
           $siswa = auth()->user()->siswa;
 
+          // Pastikan siswa memiliki relasi yang benar
+          if (!$siswa) {
+               return redirect()->route('login')->with('error', 'Data siswa tidak ditemukan');
+          }
+
           // EKSTRAKURIKULER YANG DIIKUTI
-          $myEkskul = $siswa->pendaftaran()
+          $pendaftaranAktif = $siswa->pendaftaran()
                ->where('status', 'approved')
                ->with('ekstrakurikuler.pembina')
                ->get();
 
           // STATUS PENDAFTARAN PENDING
-          $pendingStatus = $siswa->pendaftaran()
+          $pendaftaranPending = $siswa->pendaftaran()
                ->where('status', 'pending')
                ->with('ekstrakurikuler')
                ->get();
 
           // TOP 3 REKOMENDASI
-          $rekomendasi = app(WeightedScoringService::class)->hitungRekomendasi($siswa);
-          $topRekomendasi = array_slice($rekomendasi, 0, 3);
+          try {
+               $rekomendasi = app(WeightedScoringService::class)->hitungRekomendasi($siswa);
+               $topRekomendasi = array_slice($rekomendasi, 0, 3);
+          } catch (\Exception $e) {
+               $topRekomendasi = [];
+          }
 
           // PENGUMUMAN TERBARU
           $pengumuman = Pengumuman::where('is_published', true)
@@ -36,16 +45,16 @@ class DashboardController extends Controller
 
           // STATISTIK PERSONAL
           $stats = [
-               'ekstrakurikuler_aktif' => $myEkskul->count(),
-               'pendaftaran_pending' => $pendingStatus->count(),
-               'nilai_akademik' => $siswa->nilai_akademik,
-               'rekomendasi_tersedia' => count($rekomendasi)
+               'ekstrakurikuler_aktif' => $pendaftaranAktif->count(),
+               'pendaftaran_pending' => $pendaftaranPending->count(),
+               'nilai_akademik' => $siswa->nilai_akademik ?? 0,
+               'rekomendasi_tersedia' => count($topRekomendasi)
           ];
 
           return view('siswa.dashboard', compact(
                'siswa',
-               'myEkskul',
-               'pendingStatus',
+               'pendaftaranAktif',
+               'pendaftaranPending',
                'topRekomendasi',
                'pengumuman',
                'stats'

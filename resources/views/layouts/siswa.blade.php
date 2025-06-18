@@ -185,7 +185,7 @@
                             {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('siswa.profil') }}"><i
+                            <li><a class="dropdown-item" href="{{ route('siswa.profil.index') }}"><i
                                         class="fas fa-user me-2"></i>Profil</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -227,19 +227,19 @@
                             <i class="fas fa-star me-2"></i>Ekstrakurikuler
                         </a>
                         <a class="nav-link {{ request()->routeIs('siswa.rekomendasi') ? 'active' : '' }}"
-                            href="{{ route('siswa.rekomendasi') }}">
+                            href="{{ route('siswa.rekomendasi.index') }}">
                             <i class="fas fa-magic me-2"></i>Rekomendasi
                         </a>
                         <a class="nav-link {{ request()->routeIs('siswa.pendaftaran') ? 'active' : '' }}"
-                            href="{{ route('siswa.pendaftaran') }}">
+                            href="{{ route('siswa.pendaftaran.index') }}">
                             <i class="fas fa-clipboard-list me-2"></i>Pendaftaran Saya
                         </a>
                         <a class="nav-link {{ request()->routeIs('siswa.kehadiran') ? 'active' : '' }}"
-                            href="{{ route('siswa.kehadiran') }}">
+                            href="{{ route('siswa.kehadiran.index') }}">
                             <i class="fas fa-calendar-check me-2"></i>Kehadiran
                         </a>
                         <a class="nav-link {{ request()->routeIs('siswa.profil') ? 'active' : '' }}"
-                            href="{{ route('siswa.profil') }}">
+                            href="{{ route('siswa.profil.index') }}">
                             <i class="fas fa-user me-2"></i>Profil Saya
                         </a>
                     </nav>

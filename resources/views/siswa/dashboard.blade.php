@@ -140,7 +140,7 @@
             <div class="card h-100">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5><i class="fas fa-magic me-2"></i>Rekomendasi Untuk Anda</h5>
-                    <a href="{{ route('siswa.rekomendasi') }}" class="btn btn-sm btn-outline-primary">
+                    <a href="{{ route('siswa.rekomendasi.index') }}" class="btn btn-sm btn-outline-primary">
                         Lihat Semua
                     </a>
                 </div>
@@ -172,7 +172,7 @@
                             </div>
                         @endforeach
                         <div class="text-center">
-                            <a href="{{ route('siswa.rekomendasi') }}" class="btn btn-primary btn-sm w-100">
+                            <a href="{{ route('siswa.rekomendasi.index') }}" class="btn btn-primary btn-sm w-100">
                                 Lihat Rekomendasi Lengkap
                             </a>
                         </div>

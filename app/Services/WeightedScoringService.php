@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Services;
+namespace App\Services;
 
 use App\Models\Siswa;
 use App\Models\Ekstrakurikuler;
@@ -119,11 +119,6 @@ class WeightedScoringService
                $nilaiNormal *= 0.5; // Penalty besar jika sudah penuh
           }
 
-          // Faktor jenis kelamin untuk olahraga tertentu
-          if ($ekskul->kategori === 'Olahraga') {
-               // Implementasi logika khusus jika diperlukan
-          }
-
           return min(1, $nilaiNormal); // Pastikan tidak melebihi 1
      }
 
@@ -147,113 +142,5 @@ class WeightedScoringService
           if ($skor >= 80) return 'Tinggi';
           if ($skor >= 60) return 'Sedang';
           return 'Rendah';
-     }
-
-     /**
-      * Batch recommendation untuk multiple siswa
-      */
-     public function batchRecommendation($siswaIds, $limit = 3)
-     {
-          $hasil = [];
-
-          foreach ($siswaIds as $siswaId) {
-               $siswa = Siswa::find($siswaId);
-               if ($siswa) {
-                    $rekomendasi = $this->hitungRekomendasi($siswa);
-                    $hasil[$siswaId] = [
-                         'siswa' => $siswa,
-                         'rekomendasi' => array_slice($rekomendasi, 0, $limit)
-                    ];
-               }
-          }
-
-          return $hasil;
-     }
-
-     /**
-      * Analisis kelayakan ekstrakurikuler
-      */
-     public function analisisKelayakanEkstrakurikuler(Ekstrakurikuler $ekskul)
-     {
-          $allSiswa = Siswa::all();
-          $totalSkor = 0;
-          $jumlahSiswa = 0;
-          $distribusiSkor = [
-               'sangat_cocok' => 0,
-               'cocok' => 0,
-               'cukup' => 0,
-               'kurang' => 0,
-               'tidak_cocok' => 0
-          ];
-
-          foreach ($allSiswa as $siswa) {
-               $rekomendasi = $this->hitungRekomendasi($siswa);
-               $skorEkskul = collect($rekomendasi)->where('ekstrakurikuler.id', $ekskul->id)->first();
-
-               if ($skorEkskul) {
-                    $skor = $skorEkskul['skor_akhir'];
-                    $totalSkor += $skor;
-                    $jumlahSiswa++;
-
-                    if ($skor >= 85) $distribusiSkor['sangat_cocok']++;
-                    elseif ($skor >= 75) $distribusiSkor['cocok']++;
-                    elseif ($skor >= 65) $distribusiSkor['cukup']++;
-                    elseif ($skor >= 55) $distribusiSkor['kurang']++;
-                    else $distribusiSkor['tidak_cocok']++;
-               }
-          }
-
-          $rataRataSkor = $jumlahSiswa > 0 ? $totalSkor / $jumlahSiswa : 0;
-
-          return [
-               'rata_rata_skor' => round($rataRataSkor, 2),
-               'distribusi_skor' => $distribusiSkor,
-               'total_siswa_dievaluasi' => $jumlahSiswa,
-               'tingkat_popularitas' => $this->getTingkatPopularitas($distribusiSkor),
-               'rekomendasi_pengembangan' => $this->getRekomendasiPengembangan($rataRataSkor, $distribusiSkor)
-          ];
-     }
-
-     /**
-      * Get tingkat popularitas ekstrakurikuler
-      */
-     private function getTingkatPopularitas($distribusi)
-     {
-          $totalPositif = $distribusi['sangat_cocok'] + $distribusi['cocok'] + $distribusi['cukup'];
-          $totalSiswa = array_sum($distribusi);
-
-          if ($totalSiswa == 0) return 'Tidak Ada Data';
-
-          $persentasePositif = ($totalPositif / $totalSiswa) * 100;
-
-          if ($persentasePositif >= 70) return 'Sangat Populer';
-          if ($persentasePositif >= 50) return 'Populer';
-          if ($persentasePositif >= 30) return 'Cukup Populer';
-          return 'Kurang Populer';
-     }
-
-     /**
-      * Get rekomendasi pengembangan
-      */
-     private function getRekomendasiPengembangan($rataRata, $distribusi)
-     {
-          $rekomendasi = [];
-
-          if ($rataRata < 60) {
-               $rekomendasi[] = 'Perlu evaluasi ulang program dan metode pembelajaran';
-               $rekomendasi[] = 'Pertimbangkan untuk menyesuaikan kriteria penerimaan';
-          }
-
-          if ($distribusi['tidak_cocok'] > $distribusi['sangat_cocok']) {
-               $rekomendasi[] = 'Tingkatkan promosi dan sosialisasi ekstrakurikuler';
-               $rekomendasi[] = 'Buat program persiapan untuk siswa yang berminat';
-          }
-
-          if ($distribusi['sangat_cocok'] > 50) {
-               $rekomendasi[] = 'Pertimbangkan untuk menambah kuota atau membuka kelas paralel';
-               $rekomendasi[] = 'Kembangkan program lanjutan untuk siswa berbakat';
-          }
-
-          return $rekomendasi;
      }
 }

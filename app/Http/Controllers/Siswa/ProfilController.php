@@ -11,7 +11,7 @@ class ProfilController extends Controller
     public function index()
     {
         $siswa = auth()->user()->siswa;
-        return view('siswa.profil', compact('siswa'));
+        return view('siswa.profil.index', compact('siswa'));
     }
 
     public function update(Request $request)

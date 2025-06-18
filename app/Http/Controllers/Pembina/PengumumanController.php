@@ -91,4 +91,27 @@ class PengumumanController extends Controller
         return redirect()->route('pembina.pengumuman.index')
             ->with('success', 'Pengumuman berhasil dihapus');
     }
+
+    public function togglePublish(Request $request, Pengumuman $pengumuman)
+    {
+        // Check authorization
+        if ($pengumuman->author_id !== auth()->id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $isPublished = $request->boolean('is_published');
+
+        $pengumuman->update([
+            'is_published' => $isPublished,
+            'published_at' => $isPublished ? now() : null
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => $isPublished ? 'Pengumuman berhasil dipublikasikan' : 'Pengumuman berhasil disembunyikan'
+        ]);
+    }
 }
