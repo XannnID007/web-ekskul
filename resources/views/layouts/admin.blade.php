@@ -247,17 +247,20 @@
             </a>
 
             <div class="nav-section-title">MONITORING SISTEM</div>
-            <a class="nav-link {{ request()->routeIs('admin.monitor.*') ? 'active' : '' }}" href="">
+            <a class="nav-link {{ request()->routeIs('admin.monitor.*') ? 'active' : '' }}"
+                href="{{ route('admin.monitor.aktivitas') }}">
                 <i class="fas fa-eye"></i>Monitor Aktivitas
             </a>
 
             <div class="nav-section-title">LAPORAN & ANALISIS</div>
-            <a class="nav-link {{ request()->routeIs('admin.laporan.*') ? 'active' : '' }}" href="">
+            <a class="nav-link {{ request()->routeIs('admin.laporan.*') ? 'active' : '' }}"
+                href="{{ route('admin.laporan.index') }}">
                 <i class="fas fa-chart-line"></i>Generate Laporan
             </a>
 
             <div class="nav-section-title">PENGATURAN</div>
-            <a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" href="">
+            <a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}"
+                href="{{ route('admin.settings.index') }}">
                 <i class="fas fa-cog"></i>System Settings
             </a>
         </div>
